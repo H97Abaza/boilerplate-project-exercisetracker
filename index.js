@@ -83,10 +83,10 @@ app.post("/api/users/:_id/exercises", (req, res) => {
     .then((exercise) => {
       console.log("User exercises updated: ", exercise);
       const userId = exercise.username;
+      exercise._doc.date=exercise.date.toDateString()
       exercise
         .populate({ path: "username", transform: (v) => v.username })
         .then((exercise) => {
-          exercise.toJSON();
           res.json({ ...exercise._doc, _id: userId });
         });
     })
